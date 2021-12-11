@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="belajar-java-database" target="15" />
+      <module name="belajar-java-database" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
