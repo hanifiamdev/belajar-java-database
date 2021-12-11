@@ -24,7 +24,7 @@ public class StatementTest {
 
         String sql = """
             INSERT INTO customers(id, name, email) 
-            VALUES ('C0001', 'Hanif', 'hanif@gmail.com')
+            VALUES ('C0001', 'Hanif', 'hanif@gmail.com'),
             """;
         int update = statement.executeUpdate(sql);
         System.out.println(update);
