@@ -3,23 +3,25 @@ package hanifiamdev.com.database;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-public class SqlInjectionTest {
+public class PreparedStatementTest {
 
     @Test
-    void testExecuteQuery() throws SQLException {
+    void testPrepareStatement() throws SQLException {
         Connection connection = ConnectionUtil.getDataSource().getConnection();
-        Statement statement = connection.createStatement();
-
-        String username = "admin";
+        String username = "admin' ; #";
         String password = "admin";
 
-        String sql = "SELECT * FROM admin WHERE username = '" + username + "' AND PASSWORD = '" + password + "'";
-        ResultSet resultSet = statement.executeQuery(sql);
+        String sql = "SELECT * FROM admin WHERE username = ? AND password = ?";
 
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, password);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
         if(resultSet.next()) {
             // sukse login
             System.out.println("Sukses login : " + resultSet.getString("username"));
@@ -28,8 +30,8 @@ public class SqlInjectionTest {
             System.out.println("Gagal login");
         }
 
-        resultSet.close();
-        statement.close();
+        preparedStatement.close();
         connection.close();
+
     }
 }
